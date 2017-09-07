@@ -1,0 +1,3 @@
+[submodule "src/five_video_classification_methods"]
+	path = src/five_video_classification_methods
+	url = https://github.com/cagbal/five-video-classification-methods.git
