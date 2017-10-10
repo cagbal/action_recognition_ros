@@ -1,8 +1,11 @@
 # name of the object detection model
-model_name: "/five_video_classification_methods/data/checkpoints/lstm-features.071-1.057.hdf5"
+model_name: "/five_video_classification_methods/data/checkpoints/lstm-features.094-1.083.hdf5"
 
 # Set your RGB image topic here, default is for openni2
 camera_namespace: "/camera/rgb/image_raw"
 
 # Number of frames to look back
 no_of_frames: 40
+
+# Threshold for probability: probs under this value will be discarded
+prob_thresh: 0.65

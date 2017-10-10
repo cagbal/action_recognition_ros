@@ -94,7 +94,7 @@ class ActionRecognitionNode(object):
     def rgb_callback(self, data):
         """
         Callback for RGB images
-        """
+        """  
         try:
             # Conver image to numpy array
             cv_image = self._bridge.imgmsg_to_cv2(data, "bgr8")
@@ -115,7 +115,7 @@ class ActionRecognitionNode(object):
 
                     action_message.probability = prob
 
-                    print np.where(probs[0] == prob)[0][0]
+                    #print np.where(probs[0] == prob)[0][0]
 
                     action_message.action_name = \
                         str(labels[np.where(probs[0] == prob)[0][0]])
@@ -123,7 +123,7 @@ class ActionRecognitionNode(object):
                     # add action to the list
                     msg.action_array.append(action_message)
 
-            # Publish the messages
+             #Publish the messages
             self.pub_detections.publish(msg)
 
         except CvBridgeError as e:

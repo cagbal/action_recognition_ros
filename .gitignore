@@ -3,7 +3,6 @@ bin/
 lib/
 msg_gen/
 srv_gen/
-msg/*Action.msg
 msg/*ActionFeedback.msg
 msg/*ActionGoal.msg
 msg/*ActionResult.msg
