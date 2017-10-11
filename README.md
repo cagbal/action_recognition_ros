@@ -1,5 +1,4 @@
-# action_recognition_ros
-ROS Package for recognizing actions of people
+# Online Action Recognition
 
 This repo is created to classify action classes defined in UCF101 dataset in an online manner. 
 
@@ -30,7 +29,32 @@ roslaunch action_recognition action_recognition.launch
  ```
 This launch file can be found under launch folder and it uses action_recognition_params.yaml file to set parameters.
 
+# IO - Messages
 
+### Input:
+Initially, Input topic is a RGB image stream: /camera/rgb/image_raw
+
+But you can change it from action_recognitions_params.yaml
+
+### Output:
+
+topic name: /action_classification/action_class
+
+### message type:
+-----------------------------------
+
+#### Actions.msg:
+
+    Action[] action_array
+
+------------------------------------
+
+#### Action.msg:
+
+    string action_name
+    float32 probability
+
+------------------------------------
 
 License
 ----
