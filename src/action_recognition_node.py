@@ -15,7 +15,7 @@ import rospkg
 
 from sensor_msgs.msg import Image
 
-from std_msgs.msg import String
+from std_msgs.msg import String, UInt8
 
 from cv_bridge import CvBridge, CvBridgeError
 
@@ -53,6 +53,9 @@ class ActionRecognitionNode(object):
         # Advertise the result of Object Detector
         self.pub_detections = rospy.Publisher('/action_classification/action_class', \
             Actions, queue_size=1)
+
+        self.pub = rospy.Publisher('/exercise', \
+            UInt8, queue_size=1)
 
         # Subscribe to the face positions
         self.sub_rgb = rospy.Subscriber(camera_namespace,\
@@ -94,7 +97,7 @@ class ActionRecognitionNode(object):
     def rgb_callback(self, data):
         """
         Callback for RGB images
-        """  
+        """
         try:
             # Conver image to numpy array
             cv_image = self._bridge.imgmsg_to_cv2(data, "bgr8")
@@ -106,6 +109,8 @@ class ActionRecognitionNode(object):
             (probs, labels) = self._recognizer.run(cv_image)
 
             msg = Actions()
+
+            msg_int = UInt8()
 
             # Create msgs
             for prob in probs[0]:
@@ -123,8 +128,17 @@ class ActionRecognitionNode(object):
                     # add action to the list
                     msg.action_array.append(action_message)
 
+            if str(labels[np.argmax(probs[0])]) == "Body Weight Squats":
+                msg_int.data = 1
+            elif str(labels[np.argmax(probs[0])]) == "Jumping Jack":
+                msg_int.data = 2
+            else:
+                msg_int.data = 0
+
              #Publish the messages
             self.pub_detections.publish(msg)
+
+            self.pub.publish(msg_int)
 
         except CvBridgeError as e:
             print(e)
